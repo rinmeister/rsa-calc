@@ -8,6 +8,7 @@ Voor RSA private en public key encryption zijn een aantal zaken benodigd:
 We lopen door de code heen met uitleg tussen de verschillende blokken.
 
 Er worden verschillende modules gebruikt:
+
 + **gcd**: Een module om relatieve priemgetallen te kunnen vaststellen
 + **os**: gebruiken we hier om een clear screen te kunnen uitvoeren.
 + **random**: Uit deze module gebruiken we randrange om een random waarde uit een reeks te kunnen kiezen.
@@ -28,14 +29,16 @@ p = 17
 q = 23
 string_value = ''
 
-#calculate neccesary variables for RSA:
+#calculate neccessary variables for RSA:
 n = p * q
 z = (p-1)*(q-1)
 ```
 
-Nu definieren we twee functies die een public key en een private key waarde zoeken. De public key waarde gebruiken we hier voor encryptie (*e*). Dit is een waarde die een relatief priemgetal moet zijn van *z* en moet kleiner zijn dan *n*. Een relatief priemgetal deelt met *z* geen gemeenschappelijke factoren anders dan de deelfactor 1.
+Nu definiëren we twee functies die een public key en een private key waarde zoeken. De public key waarde gebruiken we hier voor encryptie (*e*). Dit is een waarde die een relatief priemgetal moet zijn van *z* en moet kleiner zijn dan *n*. Een relatief priemgetal deelt met *z* geen gemeenschappelijke factoren anders dan de deelfactor 1.
 
-In Python gebruiken we hiervoor de module **gcd**. Wat die doet is een modulus berekenen tussen beide getallen. Deze modulus mag geen 0 zijn want dan is er een deelbare relatie tussen beide getallen.
+In Python gebruiken we hiervoor de module **gcd**. Wat die doet is de ggd (grootste gemeenschappelijke deler) berekenen van de waarden *e* en *z*. Enkel wanneer de ggd de waarde 1 heeft zijn de twee getallen copriem. De manier waarop dat werkt is dat er telkents een modulo berekening wordt toegepast op de 2 waarden. Als de modulo op 0 is uitgekomen en de waarde dan 1 is weten we zeker dat de getallen copriem zijn.
+
+De berekening gaat in python als volgt: *a, b = b, a mod b*
 
 Naast de module **gcd** gebruiken we **randrange**. Met randrange kun je een random nummer kiezen in een bepaalde range. Omdat *e < n* kiezen we randrange(*n*).
 
@@ -52,7 +55,7 @@ def calcPublicKey(n):
     #haalt een waarde tussen 0 en 9.
     e = randrange(n)
 
-    #De while zoekt net zolang naar een integer waarde e die een co-prime is 
+    #De while zoekt net zolang naar een integer waarde die een copriem is 
     #van z. Als dat zo is dan stopt de loop.
     while gcd(e,z) != 1:
         e = randrange(n)

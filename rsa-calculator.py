@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 from math import gcd as gcd
 from os import system, name
 from random import randrange
@@ -12,7 +14,7 @@ p = 17
 q = 23
 string_value = ''
 
-#calculate neccesary variables for RSA:
+#calculate neccessary variables for RSA:
 n = p * q
 z = (p-1)*(q-1)
 
@@ -25,8 +27,7 @@ def calcPublicKey(n):
     e = randrange(n)
 
     #De while zoekt net zolang naar een integer waarde e die een co-prime is 
-    #van 
-    #z. Als dat zo is dan stopt de loop.
+    #van z. Als dat zo is dan stopt de loop.
     while gcd(e,z) != 1:
         e = randrange(n)
 
